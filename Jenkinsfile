@@ -7,35 +7,32 @@ pipeline {
         TENANT_ID = '596f271a-e744-4410-9203-1836891565e6'
       }
       stages {
-        stage ('check out from Git') 
-        {
-            steps {
-            git branch: prod, url: 'https://github.com/shiva-azure/springboot-java-app.git'
-          }
+        stage('check out from Git') {
+            steps{
+            git branch: 'prod', url: 'https://github.com/shiva-azure/springboot-java-app.git'
+            }
         }
-      }
-      stage{
+      stage ('maven validate') {
           steps {
             sh 'mvn validate'
           }
       }
-      stage{
+      stage ('maven compile') {
           steps {
             sh 'mvn compile'
           }
       }
-      stage{
+      stage ('maven test') {
           steps {
             sh 'mvn test'
           }
       }
-      stage{
+      stage ('maven install') {
           steps {
             sh 'mvn install'
           }
       }
-      stage('Trivy scan') 
-      {
+      stage ('Trivy scan') {
           steps {
             echo 'Trivy scan started' 
             sh 'trivy fs --format table --output trivy-report.txt --severity HIGH,CRITICAL .'
