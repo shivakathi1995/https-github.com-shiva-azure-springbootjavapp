@@ -9,7 +9,7 @@ pipeline {
       stages {
         stage('check out from Git') {
             steps{
-            git branch: 'prod', url: 'https://github.com/shiva-azure/springboot-java-app.git'
+            git branch: 'prod', url: 'https://github.com/shivakathi1995/https-github.com-shiva-azure-springbootjavapp.git'
             }
         }
       stage ('maven validate') {
@@ -37,8 +37,7 @@ pipeline {
             echo 'Trivy scan started' 
             sh 'trivy fs --format table --output trivy-report.txt --severity HIGH,CRITICAL .'
             echo 'Trivy scan completed'
-          }
-      }
-    
-    }    
+           }
+        }
+    }
 }
