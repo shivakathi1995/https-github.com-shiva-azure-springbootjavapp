@@ -24,16 +24,22 @@ pipeliene {
             sh 'mvn compile'
           }
       }
-
-
-
-
-
-
-
-
-
-
-
-
+      stage{
+          steps {
+            sh 'mvn test'
+          }
+      }
+      stage{
+          steps {
+            sh 'mvn install'
+          }
+      }
+      stage('Trivy scan') 
+      {
+          steps {
+            echo 'Trivy scan started' 
+            sh 'trivy fs --format table --output trivy-report.txt --severity HIGH,CRITICAL .'
+            echo 'Trivy scan completed'
+         }
+      }
 }
