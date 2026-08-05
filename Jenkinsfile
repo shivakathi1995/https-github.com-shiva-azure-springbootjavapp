@@ -36,7 +36,8 @@ pipeline {
           steps {
             echo 'Trivy scan started' 
             sh 'trivy fs --format table --output trivy-report.txt --severity HIGH,CRITICAL .'
-            echo 'Trivy scan completed'
+            echo 'Trivy scan finished'
            }
         }
     }
+}
