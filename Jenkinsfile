@@ -51,7 +51,7 @@ pipeline {
                 -Dsonar.organization=shiva2302 \
                 -Dsonar.projectKey=shivakathi1995_https-github.com-shiva-azure-springbootjavapp \
                 -Dsonar.projectName=https-github.com-shiva-azure-springbootjavapp \
-                -Dsonar.java.binaries=.
+                -Dsonar.java.binaries=target/classes
               """
             }
            }
