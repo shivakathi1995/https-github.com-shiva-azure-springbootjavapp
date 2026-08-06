@@ -73,10 +73,8 @@ pipeline {
         }
       stage ('Docker Build') {
           steps {
-            script {
             echo 'Building Docker image'
             docker.build -t "${IMAGE_NAME}:${IMAGE_TAG}" .
-            }
             
            }
         }
