@@ -63,12 +63,10 @@ pipeline {
         }
        stage('Quality Gate') {
             steps {
-                echo 'Quality Gate started' 
-                timeout(time: 5, unit: 'MINUTES') {
-                    // abortPipeline: false prevents Jenkins from failing when Sonar Quality Gate fails
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar'
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQuality abortPipeline: true, credentialsId: 'sonar'
+                    echo 'Sonar Quality Gate finished'
                 }
-                echo 'Quality Gate finished'
             }
         }
     }
