@@ -67,14 +67,14 @@ pipeline {
             steps {
                 timeout(time: 2, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true, credentialsId: 'sonar'
-                    echo 'Sonar Quality Gate finished'
+                    echo "Sonar Quality Gate finished"
                 }
             }
         }
       stage ('Docker Build') {
           steps {
             echo 'Building Docker image'
-            sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+            sh 'docker build -t "${IMAGE_NAME}:${IMAGE_TAG}" .'
             
            }
         }
