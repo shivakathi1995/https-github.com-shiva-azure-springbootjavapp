@@ -5,6 +5,8 @@ pipeline {
       }   
       environment {
         TENANT_ID = '596f271a-e744-4410-9203-1836891565e6'
+        IMAGE_NAME = 'shivakathi1995/https-github.com-shiva-azure-springbootjavapp'
+        IMAGE_TAG = 'latest'
       }
       stages {
         stage('check out from Git') {
@@ -64,10 +66,18 @@ pipeline {
        stage('Quality Gate') {
             steps {
                 timeout(time: 2, unit: 'MINUTES') {
-                    waitForQuality abortPipeline: true, credentialsId: 'sonar'
+                    waitForQualityGate abortPipeline: true, credentialsId: 'sonar'
                     echo 'Sonar Quality Gate finished'
                 }
             }
+        }
+      stage ('Docker Build') {
+          steps {
+            scripts {
+            echo 'Building Docker image'
+            docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
+            }
+           }
         }
     }
 }
