@@ -4,9 +4,12 @@ pipeline {
         maven 'maven'
       }   
       environment {
-        TENANT_ID = '596f271a-e744-4410-9203-1836891565e6'
-        IMAGE_NAME = 'shivakathi1995/https-github.com-shiva-azure-springbootjavapp'
-        IMAGE_TAG = 'latest'
+        TENANT_ID       = '596f271a-e744-4410-9203-1836891565e6'
+        ACR_NAME        = 'acrregistry2302'
+        IMAGE_NAME      = 'springbootjavapp'
+        IMAGE_TAG       = "${BUILD_NUMBER}"
+        FULL_IMAGE_NAME = "${ACR_NAME}.azurecr.io/${IMAGE_NAME}:${IMAGE_TAG}"
+    }
       }
       stages {
         stage('check out from Git') {
@@ -79,6 +82,19 @@ pipeline {
                     docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
                 }
             }
+          stage('Docker Push')
+        {
+            steps
+            {
+                script {
+                    echo "Docker Image Push"
+                    sh '''
+                        docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${FULL_IMAGE_NAME}
+                        docker push ${FULL_IMAGE_NAME}
+                    '''
+                }
+            }
+        }
         }
       }
 }
