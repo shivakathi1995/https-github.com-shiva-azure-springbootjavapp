@@ -46,12 +46,12 @@ pipeline {
           steps {
             echo 'SonarQube scan started' 
             withSonarQubeEnv('sonar-server') {
-              sh ''' $(SCANNER_HOME)/bin/sonar-scanner \
+              sh """ $(SCANNER_HOME)/bin/sonar-scanner \
                 -Dsonar.organisation=shivakathi1995 \
                 -Dsonar.projectname=springbootapp \
                 -Dsonar.projectKey=shivakathi1995_springbootapp \
                 -Dsonar.java.binaries=.
-              '''
+              """
             }
            }
         }
