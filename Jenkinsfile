@@ -12,26 +12,26 @@ pipeline {
             git branch: 'prod', url: 'https://github.com/shivakathi1995/https-github.com-shiva-azure-springbootjavapp.git'
             }
         }
-      stage ('maven validate') {
-          steps {
-            sh 'mvn validate'
-          }
-      }
-      stage ('maven compile') {
-          steps {
-            sh 'mvn compile'
-          }
-      }
-      stage ('maven test') {
-          steps {
-            sh 'mvn test'
-          }
-      }
-      stage ('maven install') {
-          steps {
-            sh 'mvn install'
-          }
-      }
+      // stage ('maven validate') {
+      //     steps {
+      //       sh 'mvn validate'
+      //     }
+      // }
+      // stage ('maven compile') {
+      //     steps {
+      //       sh 'mvn compile'
+      //     }
+      // }
+      // stage ('maven test') {
+      //     steps {
+      //       sh 'mvn test'
+      //     }
+      // }
+      // stage ('maven install') {
+      //     steps {
+      //       sh 'mvn install'
+      //     }
+      // }
       stage ('Trivy scan') {
           steps {
             echo 'Trivy scan started' 
@@ -56,7 +56,20 @@ pipeline {
             }
            }
         }
-    
+        stage ('maven package') {
+            steps {
+              sh 'mvn package'
+            }
+        }
+       stage ('Quality Gate') {
+          steps {
+            echo 'Quality Gate started' 
+            timeout(time: 1, unit: 'MINUTES') {
+              waitForQualityGate abortPipeline: true, credentialsId:'sonar'
+            }
+            echo 'Quality Gate finished'
+           }
+        }
     
     }
 }
